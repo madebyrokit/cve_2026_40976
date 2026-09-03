@@ -22,7 +22,7 @@ def install_requests():
         try:
             # pip로 설치
             subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
-            print("[+] requests 라이브러리 설치 완료!")
+            print("[+] requests 라이브러리 설치 완료! 다시 실행해주세요.")
             return True
         except subprocess.CalledProcessError:
             print("[-] requests 라이브러리 설치 실패. 수동으로 설치해주세요: pip install requests")
