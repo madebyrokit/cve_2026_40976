@@ -1,0 +1,12 @@
+services:
+    ctf40976:
+      build: .
+      image: ctf40976
+      ports:
+        - "10018:8080"
+      environment:
+        FLAG: "WINS{local_review_only}"
+      read_only: true
+      tmpfs:
+        - /tmp
+      restart: unless-stopped

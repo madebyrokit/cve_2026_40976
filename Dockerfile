@@ -1,24 +1,17 @@
-FROM amazoncorretto:17-alpine
-
+# --- build stage ---
+FROM amazoncorretto:17-alpine AS build
 WORKDIR /app
-
-# 전체 프로젝트 복사
-COPY . .
-
-# Gradle Wrapper 실행 권한 부여
+COPY gradlew .
+COPY gradle ./gradle
+COPY build.gradle settings.gradle ./
 RUN chmod +x gradlew
+COPY src ./src
+RUN ./gradlew clean build -x test --no-daemon
 
-# 빌드
-RUN ./gradlew clean build -x test
-
-# JAR 파일 복사 (정확한 파일명 지정)
-RUN cp build/libs/ctf40976-0.0.1-SNAPSHOT.jar app.jar
-
-# 컨테이너 실행 시 플래그를 환경 변수로 설정
-ENV FLAG=cve_2026_40976_bypassed
-
-# 8080 포트 노출
+# --- run stage ---
+FROM amazoncorretto:17-alpine
+WORKDIR /app
+COPY --from=build /app/build/libs/ctf40976-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# JAR 파일 실행
+# ENV FLAG=... 절대 넣지 않음 (이미지에 구우면 docker history로 유출)
 ENTRYPOINT ["java", "-jar", "app.jar"]

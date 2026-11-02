@@ -3,6 +3,9 @@ package com.cve.ctf40976;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class CtfController {
     @GetMapping("/")
@@ -331,7 +334,7 @@ public class CtfController {
                         <div class="badge">⚡ CTF Challenge</div>
                 
                         <!-- 제목 -->
-                        <h1 class="title">셧다운 쇼다운</h1>
+                        <h1 class="title">Actuator 취약점</h1>
                         <p class="subtitle">Spring Boot Actuator 인증 우회 취약점을 찾아라</p>
                 
                         <!-- 취약점 정보 태그 -->
@@ -367,8 +370,7 @@ public class CtfController {
                                     <strong>2.</strong> 인증 없이 접근 가능한 엔드포인트를 찾아보세요.
                                 </li>
                                 <li>
-                                    <strong>3.</strong> <span class="code">특정</span> 엔드포인트를
-                                    POST로 호출하면 서버가 종료되면서 플래그가 출력됩니다.
+                                    <strong>3.</strong> <span class="code">특정</span> 엔드포인트를 호출하면 플래그가 출력됩니다.
                                 </li>
                                 <li style="margin-top: 8px; color: rgba(255,255,255,0.4); font-size: 13px;">
                                     ⚡ 힌트: <span class="code">/actuator</span> 링크를 먼저 확인해보세요.
@@ -391,11 +393,5 @@ public class CtfController {
                 </body>
                 </html>
             """;
-    }
-
-    // 플래그를 반환하는 엔드포인트 (Shutdown 전에만 접근 가능)
-    @GetMapping("/flag")
-    public String flag() {
-        return "DH{" + System.getenv("FLAG") + "}";
     }
 }
